@@ -39,7 +39,7 @@ postRouter.route('/')
         res.end('PUT operation not supported on /posts');
     })
     .delete(authenticate.varifyUser, authenticate.varifyAdmin, (req, res, next) => {
-        Posts.remove({})
+        Posts.deleteMany({})
             .then((response) => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
@@ -160,8 +160,7 @@ postRouter.route('/:postId/comments')
                     // looping through the array fron end to start and deleting
                     for (var i = (post.comments.length - 1); i >= 0; i--) {
                         post.comments.id(post.comments[i]._id).remove();
-                        // dish.comments.id(dish.comments[i]._id)
-                        // the above line gives access to each comment in the document
+
                     }
                     post.save()
                         .then((post) => {

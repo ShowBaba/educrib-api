@@ -4,12 +4,12 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const config = require('./config');
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/userRouter');
 const passport = require('passport');
 var logger = require('morgan');
 var session = require('express-session');
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/userRouter');
 var postRouter = require('./routes/postRouter');
 
 var app = express();
@@ -25,6 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(passport.initialize());
 
+// TODO: Use /api/v1 as the root endpoint
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/posts', postRouter);
@@ -37,7 +38,8 @@ const mongoose = require('mongoose');
 const url = config.mongoUrl;
 const connect = mongoose.connect(url, {
   useUnifiedTopology: true, useNewUrlParser: true,
-  useFindAndModify: false
+  useFindAndModify: false,
+  useCreateIndex: true
 });
 
 // establish connection
