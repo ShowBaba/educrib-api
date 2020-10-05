@@ -1,6 +1,6 @@
 {
   "name": "educrib-api",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "educrib is an educational app where students share study informations online",
   "private": true,
   "scripts": {
