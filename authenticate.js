@@ -4,8 +4,10 @@ const User = require('./models/user');
 var JwtStrategy = require('passport-jwt').Strategy;
 var ExtractJwt = require('passport-jwt').ExtractJwt;
 var jwt = require('jsonwebtoken');
+const dotenv = require("dotenv");
+dotenv.config();
 
-var config = require('./config');
+// var config = require('./config');
 
 // configure pssport with the new local strategy
 
@@ -17,7 +19,7 @@ passport.deserializeUser(User.deserializeUser());
 // method to create a token using the param
 exports.getToken = (user) => {
     // create token
-    return jwt.sign(user, config.secretKey,
+    return jwt.sign(user, process.env.secretKey,
         { expiresIn: 3600 } 
         );
     // TODO: add { expiresIn: 3600 } to set token duration
@@ -29,7 +31,7 @@ exports.getToken = (user) => {
 // using the ExtrackJwt methods
 var opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = config.secretKey;
+opts.secretOrKey = process.env.secretKey;
 
 exports.jwtPassport = passport.use(new JwtStrategy(opts,
     (jwt_payload, done) => {
