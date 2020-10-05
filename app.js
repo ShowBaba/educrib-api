@@ -11,12 +11,16 @@ var session = require('express-session');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/userRouter');
 var postRouter = require('./routes/postRouter');
-// const cors = require("cors");
+const cors = require("cors");
 const dotenv = require("dotenv");
 dotenv.config();
 
 var app = express();
 
+var corsOptions = {
+  origin: "*"
+};
+app.use(cors(corsOptions));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -28,11 +32,18 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(passport.initialize());
 
-// TODO: Use /api/v1 as the root endpoint
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/posts', postRouter);
+// TODO: Include proper status codes in all response..
+app.get('/', (req, res) => {
+  res.redirect('/api/v1');
+});
+app.use('/api/v1/', indexRouter);
+app.use('/api/v1/users', usersRouter);
+app.use('/api/v1/posts', postRouter);
 
+// set up a wildcard route
+app.get('*', (req, res) => {
+  res.redirect('/api/v1');
+});
 
 app.use(express.static(path.join(__dirname, 'public')));
 
