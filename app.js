@@ -11,6 +11,9 @@ var session = require('express-session');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/userRouter');
 var postRouter = require('./routes/postRouter');
+// const cors = require("cors");
+const dotenv = require("dotenv");
+dotenv.config();
 
 var app = express();
 
@@ -36,7 +39,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 const mongoose = require('mongoose');
 
 const url = config.mongoUrl;
-const connect = mongoose.connect(url, {
+// replace process.env.DB_CONNECTION with url to use local mongodb
+const connect = mongoose.connect(process.env.DB_CONNECTION, {
   useUnifiedTopology: true, useNewUrlParser: true,
   useFindAndModify: false,
   useCreateIndex: true
