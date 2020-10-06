@@ -4,13 +4,12 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const config = require('./config');
-var usersRouter = require('./routes/userRouter');
+var usersRouter = require('./routes/route.user');
 const passport = require('passport');
 var logger = require('morgan');
 var session = require('express-session');
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/userRouter');
-var postRouter = require('./routes/postRouter');
+var postRouter = require('./routes/route.post');
 const cors = require("cors");
 const dotenv = require("dotenv");
 dotenv.config();
@@ -37,6 +36,7 @@ app.get('/', (req, res) => {
   res.redirect('/api/v1');
 });
 app.use('/api/v1/', indexRouter);
+// TODO: change the user activity endpoint below to /api/auth
 app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/posts', postRouter);
 
@@ -49,9 +49,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const mongoose = require('mongoose');
 
-const url = config.mongoUrl;
-// replace process.env.DB_CONNECTION with url to use local mongodb
-const connect = mongoose.connect(process.env.DB_CONNECTION, {
+const localUrl = config.mongoUrl;
+let liveUrl = process.env.DB_CONNECTION;
+// replace liveUrl with localUrl to use local mongodb
+const connect = mongoose.connect(liveUrl, {
   useUnifiedTopology: true, useNewUrlParser: true,
   useFindAndModify: false,
   useCreateIndex: true

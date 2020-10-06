@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const authenticate = require('../authenticate');
-const Posts = require('../models/post');
+const Posts = require('../models/model.post');
 
 const postRouter = express.Router();
 
