@@ -20,8 +20,8 @@ passport.deserializeUser(User.deserializeUser());
 exports.getToken = (user) => {
     // create token
     return jwt.sign(user, process.env.secretKey,
-        { expiresIn: 3600 } 
-        );
+        { expiresIn: 3600 }
+    );
     // TODO: add { expiresIn: 3600 } to set token duration
     // token expires in an hour
 };
