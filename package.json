@@ -4,7 +4,8 @@
   "description": "educrib is an educational app where students share study informations online",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "lint": "eslint"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
     "educrib"
   ],
   "dependencies": {
+    "body-parser": "^1.19.0",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
@@ -42,7 +44,14 @@
   },
   "homepage": "https://github.com/ShowBaba/educrib-api#readme",
   "main": "app.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "eslint": "^7.11.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "mocha": "^8.2.0"
+  },
   "author": "Samuel Shoyemi",
   "license": "ISC"
 }

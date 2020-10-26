@@ -1,56 +1,53 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-const config = require("./config");
-var usersRouter = require("./routes/route.user");
-const passport = require("passport");
-var logger = require("morgan");
-var session = require("express-session");
-var indexRouter = require("./routes/index");
-var postRouter = require("./routes/route.post");
-const cors = require("cors");
-const dotenv = require("dotenv");
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
+const passport = require('passport');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const mongoose = require('mongoose');
+const config = require('./config');
+const usersRouter = require('./routes/route.user');
+const indexRouter = require('./routes/index');
+const postRouter = require('./routes/route.post');
+
 dotenv.config();
 
-var app = express();
+const app = express();
 
-var corsOptions = {
-  origin: "*",
+const corsOptions = {
+  origin: '*',
 };
 app.use(cors(corsOptions));
 // view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "jade");
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
-app.use(logger("dev"));
+app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-// app.use(cookieParser());
 
 app.use(passport.initialize());
 
 // TODO: Include proper status codes in all response..
-app.get("/", (req, res) => {
-  res.redirect("/api/v1");
+app.get('/', (req, res) => {
+  res.redirect('/api/v1');
 });
-app.use("/api/v1/", indexRouter);
-// TODO: change the user activity endpoint below to /api/auth
-app.use("/api/v1/users", usersRouter);
-app.use("/api/v1/posts", postRouter);
+app.use('/api/v1/', indexRouter);
+// TODO: change the user activity endpoint below to /api/v1/auth
+app.use('/api/v1/users', usersRouter);
+app.use('/api/v1/posts', postRouter);
 
 // set up a wildcard route
-app.get("*", (req, res) => {
-  res.redirect("/api/v1");
+app.get('*', (req, res) => {
+  res.redirect('/api/v1');
 });
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, 'public')));
 
-const mongoose = require("mongoose");
-
+// eslint-disable-next-line no-unused-vars
 const localUrl = config.mongoUrl;
-let liveUrl = process.env.DB_CONNECTION;
+const liveUrl = process.env.DB_CONNECTION;
 // replace liveUrl with localUrl to use local mongodb
 const connect = mongoose.connect(liveUrl, {
   useUnifiedTopology: true,
@@ -61,28 +58,29 @@ const connect = mongoose.connect(liveUrl, {
 
 // establish connection
 connect.then(
+  // eslint-disable-next-line no-unused-vars
   (db) => {
-    console.log("Connected to Database");
+    console.log('Connected to Database');
   },
   (err) => {
     console.log(err);
-  }
+  },
 );
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use((err, req, res) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
   res.status(err.status || 500);
-  res.render("error");
+  res.render('error');
 });
 
 module.exports = app;

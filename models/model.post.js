@@ -1,5 +1,7 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+/* eslint-disable linebreak-style */
+const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
 
 const commentSchema = new Schema(
   {
@@ -9,19 +11,19 @@ const commentSchema = new Schema(
     },
     author: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
     },
   },
   {
     timestamps: true,
-  }
+  },
 );
 
-let Post = new Schema(
+const Post = new Schema(
   {
     author: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
     },
     content: {
       type: String,
@@ -39,9 +41,9 @@ let Post = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
-let Posts = mongoose.model("post", Post);
+const Posts = mongoose.model('post', Post);
 
 module.exports = Posts;

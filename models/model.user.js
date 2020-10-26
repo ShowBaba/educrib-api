@@ -1,15 +1,17 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-const passportLocalMongoose = require("passport-local-mongoose");
+/* eslint-disable linebreak-style */
+const mongoose = require('mongoose');
 
-let User = new Schema({
+const { Schema } = mongoose;
+const passportLocalMongoose = require('passport-local-mongoose');
+
+const User = new Schema({
   firstname: {
     type: String,
-    default: "",
+    default: '',
   },
   lastname: {
     type: String,
-    default: "",
+    default: '',
   },
   email: {
     type: String,
@@ -21,7 +23,7 @@ let User = new Schema({
   },
   image: {
     type: String,
-    default: "default.png", // use a default image from /public/images folder
+    default: 'default.png', // use a default image from /public/images folder
   },
 });
 
@@ -29,4 +31,4 @@ let User = new Schema({
 // username and password schema
 User.plugin(passportLocalMongoose);
 
-module.exports = mongoose.model("User", User);
+module.exports = mongoose.model('User', User);
