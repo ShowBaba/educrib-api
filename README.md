@@ -20,6 +20,6 @@
 Here's the link to the [documentation](https://bit.ly/2TyS3nv).
 
 ### Sample Client Application 
-Here's the link to a [sample client application](https://github.com/ShowBaba/educrib).
+Link to a [sample client application](https://github.com/ShowBaba/educrib).
 
 <h3 align="center">PROJECT UNDER CONSTRUCTION!</h3>
